@@ -49,7 +49,7 @@ public:
 	void setFilename(char f[]);
 	int getCount();
 	void addToList(contact *c);
-	int checkList();
+	void checkList();
 	void showList();
 	int saveList();
 	void readList();
@@ -156,15 +156,17 @@ void contactlist::readList()
 	}
 	infile.close();
 }
+ // this function created checks the inputted object with the objects written into the file, 
+// if the objects contain the same name than one of those in the file, the information slot is not inputted and the contactcounter is sent back.
 
-int contactlist::checkList()
+void contactlist::checkList()
 {
-	int  i = 1;
+	int  i;
 	ifstream infile(filename);
-	
+
 	for (i = 1; i <= contactCount; i++)
 	{
-		if (strcmp(mylist[contactCount-1]->name, mylist[contactCount - i]->name) == 0)
+		if (strcmp(mylist[contactCount-1]->name, mylist[(contactCount-1) - i]->name) == 0)
 		{
 			system("pause");
 			system("cls");
@@ -173,16 +175,17 @@ int contactlist::checkList()
 			cout << " " << endl;
 			cout << "Contact was not added!" << endl;
 			cout << " " << endl;
-			i++; 
+			i++;
 			contactCount--;
-			return 0;
+			return ;
 		}
 		else
 		{
-			return 1; 
+			return ;
 		}
 	}
 }
+
 int main()
 {
 	char answer = 'y';
@@ -194,11 +197,14 @@ int main()
 	contactlist *cList = new contactlist();
 
 	cout << "Your Phonebook" << endl;
+	cout << "--------------" << endl;
 	cout << "Enter a file name: " << endl;
 	gets_s(filename);
 	cList->setFilename(filename);
 
 	cList->readList();
+	system("pause");
+	system("cls");
 	if (cList->getCount() == 0)
 	{
 		system("pause");
@@ -253,18 +259,19 @@ int main()
 		mycontact->setContact(name, homeNumber, mobileNumber);
 		cList->addToList(mycontact);
 
-		cList->checkList();
+		
 
 		cout << "Would you like to enter another contact? Enter Y to add; any other key to display" << endl;
 		cin >> answer;
 	}
 
+	
+	cList->checkList();
 	system("pause");
 	system("cls");
 	cout << "Contact List" << endl;
 	cout << "-------------------------------------------" << endl;
 
-	//displays list//
 	cList->showList();
 	cList->saveList();
 
