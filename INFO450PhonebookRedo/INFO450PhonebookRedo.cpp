@@ -107,7 +107,7 @@ void contactlist::showList()
 			ThisLine++;
 		}
 	}
-		
+
 }
 
 int contactlist::saveList()
@@ -144,7 +144,7 @@ void contactlist::readList()
 		char homeNumber[30];
 		char mobileNumber[30];
 
-		infile.getline(name , 30, ',');
+		infile.getline(name, 30, ',');
 		if (strlen(name))
 		{
 			infile.getline(homeNumber, 30, ',');
@@ -156,7 +156,7 @@ void contactlist::readList()
 	}
 	infile.close();
 }
- // this function created checks the inputted object with the objects written into the file, 
+// this function created checks the inputted object with the objects written into the file, 
 // if the objects contain the same name than one of those in the file, the information slot is not inputted and the contactcounter is sent back.
 
 void contactlist::checkList()
@@ -164,9 +164,9 @@ void contactlist::checkList()
 	int  i;
 	ifstream infile(filename);
 
-	for (i = 1; i <= contactCount; i++)
+	for (i = 1; i <= (contactCount-1); i++)
 	{
-		if (strcmp(mylist[contactCount-1]->name, mylist[(contactCount-1) - i]->name) == 0)
+		if (strcmp(mylist[contactCount-1]->name, mylist[(contactCount - 1) - i]->name) == 0)
 		{
 			system("pause");
 			system("cls");
@@ -175,15 +175,10 @@ void contactlist::checkList()
 			cout << " " << endl;
 			cout << "Contact was not added!" << endl;
 			cout << " " << endl;
-			i++;
 			contactCount--;
-			return ;
-		}
-		else
-		{
-			return ;
 		}
 	}
+	return;
 }
 
 int main()
@@ -259,13 +254,13 @@ int main()
 		mycontact->setContact(name, homeNumber, mobileNumber);
 		cList->addToList(mycontact);
 
-		
+
 
 		cout << "Would you like to enter another contact? Enter Y to add; any other key to display" << endl;
 		cin >> answer;
 	}
 
-	
+
 	cList->checkList();
 	system("pause");
 	system("cls");
