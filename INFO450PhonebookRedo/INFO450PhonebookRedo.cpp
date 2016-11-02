@@ -49,6 +49,7 @@ public:
 	void setFilename(char f[]);
 	int getCount();
 	void addToList(contact *c);
+	int checkList();
 	void showList();
 	int saveList();
 	void readList();
@@ -156,6 +157,32 @@ void contactlist::readList()
 	infile.close();
 }
 
+int contactlist::checkList()
+{
+	int  i = 1;
+	ifstream infile(filename);
+	
+	for (i = 1; i <= contactCount; i++)
+	{
+		if (strcmp(mylist[contactCount-1]->name, mylist[contactCount - i]->name) == 0)
+		{
+			system("pause");
+			system("cls");
+			cout << "<ALERT> This contact already exists." << endl;
+			cout << "------------------------------------" << endl;
+			cout << " " << endl;
+			cout << "Contact was not added!" << endl;
+			cout << " " << endl;
+			i++; 
+			contactCount--;
+			return 0;
+		}
+		else
+		{
+			return 1; 
+		}
+	}
+}
 int main()
 {
 	char answer = 'y';
@@ -174,6 +201,8 @@ int main()
 	cList->readList();
 	if (cList->getCount() == 0)
 	{
+		system("pause");
+		system("cls");
 		cout << "New file!" << endl;
 		cout << "<ALERT> No contacts available!" << endl;
 	}
@@ -224,6 +253,7 @@ int main()
 		mycontact->setContact(name, homeNumber, mobileNumber);
 		cList->addToList(mycontact);
 
+		cList->checkList();
 
 		cout << "Would you like to enter another contact? Enter Y to add; any other key to display" << endl;
 		cin >> answer;
@@ -240,4 +270,3 @@ int main()
 
 	return 0;
 }
-
